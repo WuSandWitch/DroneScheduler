@@ -50,7 +50,7 @@ def drones_status():
 
 @app.route("/send_command" , methods= ["GET","POST"])
 def send_command():
-    data = flask.request.json
+    data = flask.request.args
     name = data["name"]
     command = data["command"]
     parameter = data["parameter"]
