@@ -14,7 +14,7 @@ logging.basicConfig(
 )
 
 host = "0.0.0.0"
-port = 19999
+port = 8011
 server = WebsocketServer(host=host, port=port, loglevel=logging.DEBUG)
 
 drones = {}
@@ -50,7 +50,7 @@ def drones_status():
     return flask.jsonify(data)
 
 def run_flask_server():
-    app.run(host="0.0.0.0",port=8080)
+    app.run(host="0.0.0.0",port=8012)
 
 def run_websocket_server():
     server.set_fn_new_client(handle_drone_connect)
