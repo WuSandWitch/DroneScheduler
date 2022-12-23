@@ -39,6 +39,15 @@ def handle_drone_message(client, server, message):
         print(f"Drone Status Recive : {drone_name}\nStaus : {data['drone_status']}")
 
 app = flask.Flask(__name__)
+
+@app.route("/")
+def root():
+    return flask.redirect("/drones_status")
+
+@app.route("/debug_consle")
+def deubg_console():
+    return flask.render_template("debugConsole.html")
+
 @app.route("/drones_status")
 def drones_status():
     data = {}
@@ -50,7 +59,7 @@ def drones_status():
 
 @app.route("/send_command" , methods= ["GET","POST"])
 def send_command():
-    data = flask.request.args
+    data = flask.request.json
     name = data["name"]
     command = data["command"]
     parameter = data["parameter"]
@@ -61,6 +70,8 @@ def send_command():
         "parameter" : parameter
     }
     server.send_message(drones[name]["client"],orjson.dumps(data,option=orjson.OPT_NAIVE_UTC))
+    return "Command execute success"
+
 
 def run_flask_server():
     app.run(host="0.0.0.0",port=8012)
